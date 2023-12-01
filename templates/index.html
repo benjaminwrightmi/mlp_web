@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename= 'icons/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename= 'icons/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename= 'icons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename= 'icons/favicon-16x16.png') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename= 'icons/favicon.ico') }}">
+    <link rel="manifest" href="{{ url_for('static', filename= 'icons/site.webmanifest') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLP Tools</title>
+    
+</head>
+<body>
+    <section>
+    <form action="{{ url_for('upload_file') }}" enctype="multipart/form-data" method="POST">
+        <header>
+            <h4>Upload an Image</h4>
+        </header>
+        <input name="img" type="file"/>
+        <input type="submit" value="Extract Colours"/>
+    </form>
+    </section>
+    <hr>
+    <section>
+        {% if img %}
+        <img src="{{img}}" style="max-width: 50%;">
+        {% else %}
+        <h2>Awaiting Image...</h2>
+        {% endif %}
+        {% if colours %}
+        {% if colours|length > 20 %}
+        <h2>More than 20 Colours</h2>
+        {% else %}
+        <aside>
+            <header><h2>Colours</h2></header>
+            <ul id="colour_list"> 
+                <script>const jsColors = {{colours|tojson|safe}};</script>
+                <script type = "text/javascript" src="{{ url_for('static', filename='js/colour_list.js') }}"></script>
+            </ul> 
+        </aside>
+        {% endif %}
+        {% endif %}
+    </section>
+</body>
+</html>
+
+
